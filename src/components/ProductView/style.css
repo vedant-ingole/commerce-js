@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.product-view{
+     margin-top: 100px;
+}
+
+.product-view img{
+    width:30rem;
+}
+
+.text{
+    padding: 10px;
+    margin-right: 100px;
+}
+
+.text typography {
+    margin-bottom: 10px;
+}
+
+.increase-product-quantity{
+    background-color: green;
+}
