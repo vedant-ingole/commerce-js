@@ -1,70 +1,90 @@
-import React, { useState, useEffect } from 'react'
-import { commerce } from '../../lib/commerce'
+import React, { useState, useEffect } from 'react';
+import { commerce } from '../../lib/commerce';
+import './styles.js';
+import { Typography, Button, AppBar, Card, CardAction, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Container } from '@material-ui/core';
+import { PhotoCamera } from '@material-ui/icons';
+import Product from "../Products/Product/Product";
+import { withRouter } from 'react-router';
 
-const CategoryView = (  ) => {
+import Spinner from '../Spinner/Spinner.jsx';
+
+// import useStyles from './styles';
+
+const CategoryView = ( props,{onAddToCart} ) => {
+
+    // const classes = useStyles();
 
     const [category, setCategory] = useState({});
     const [products, setProducts] = useState([]);
 
-    const fetchCategory = async ( slug ) => {
-        console.log(slug);
+    const [slug, setSlug] = useState(0);
 
-        const category = await commerce.categories.retrieve( slug, { type: 'slug' })
-        
-        console.log(category.id);
+    // const [loading, setLoading] = useState(false);
+
+    const fetchCategory = async ( slug ) => {
+
+        const category = await commerce.categories.retrieve( slug, { type: 'slug' });
         const { id, name } = category ;
 
         setCategory({
             id,
-            name,
-            slug  }) }
-
-    const fetchProducts = async ( slug ) => {
-        const { data: productsData } = await commerce.products.list({ category_slug : slug}); 
-        
-        console.log( productsData );    }
+            name
+        }) 
+     
+        const { data: productsData } = await commerce.products.list({ category_slug : [slug] });   
+    
+        setProducts(productsData);
+    }
 
 
 
     useEffect(() => {
-        const slug = window.location.pathname.split('/');
-        fetchCategory(slug[2]); 
-        fetchProducts();
-    }, [])
-    
+        // const slug = window.location.pathname.split('/');
+        const catSlug = props.match.params.slug;
+        console.log(catSlug);
+
+        fetchCategory(catSlug); 
+        // setSlug(catSlug);
+    }, [slug] );
+
+        console.log(slug);
+        console.log(props.match.params.slug);
+
     
     return (
-        <div>
-            <h1 
-            style={{marginTop:'70px'}}>Category: {category.name} 
-            </h1>
 
-            <div>
-                  {  products.map((product) => (
-                      <p>{product.name}</p>
-                      ))
-                    }
-            </div>
+        <>
+            <CssBaseline/>     
+            {/* <AppBar> */}
+            
+           
+                    
+            <main>
+                <div >
+                    <Typography variant="h3" align="center" gutterBottom style={{marginTop:'70px'}}  > 
+                            {category.name}
+                    </Typography>
+                    
+                </div>
+                    <Grid container spacing={2} justify="center">
+                    {  products.map((product) => (
 
-        </div>
+                                <Grid item key={product.id} xs={10} sm={3} md={3} lg={3}> 
+                                         
+                                         <Product
+                                            product={product} 
+                                            onAddToCart={onAddToCart} 
+                                            />
+                                 </Grid>
+                        ))}
+                        
+                    </Grid>
+               {/* { loading && <Spinner/> } */}
+            </main>
+
+            <button onClick={() => setSlug(slug+1)} >Click {slug} </button>
+        </>
     )
 }
 
-export default CategoryView;
-
-// const productInCategory = await productsData.filter((product) => {
-    
-    
-//     return (       
-//         product.categories.find((cat, i, arr) => { 
-//                if(!category) return console.log('noooooo');
-//                  return( cat.id === category.id )
-//     })
-// )},[]);
-
-// console.log(productInCategory);
-
-
-// setProducts(productInCategory);
-
-// console.log(products);
+export default withRouter(CategoryView);

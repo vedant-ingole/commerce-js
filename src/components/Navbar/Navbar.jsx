@@ -2,16 +2,31 @@ import React from 'react';
 import { AppBar, Toolbar, IconButton, Badge, MenuItem, Menu, Typography } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import useStyles from './styles'
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, Route, BrowserRouter } from 'react-router-dom';
+import { commerce } from '../../lib/commerce';
+import Product from '../Products/Product/Product.js';
+import { CategoryViews } from '..';
 
-const Navbar = ({totalItems}) => {
+
+const Navbar = ({ totalItems, categories, onAddToCart }) => {
 
     const classes = useStyles();
     const location = useLocation();
 
+    // console.log(categories);
+
      return (
         <>
-            <AppBar position='fixed' className={classes.appBar} color='inherit'>
+
+                {/* <div>
+                    { categories.map((category) => (
+                        <Link to={`/category-view/${category.slug}`}>
+                           {category.name }  
+                        </Link>
+                    ))}
+                </div> */}
+        
+                <AppBar position='fixed' className={classes.appBar} color='inherit'>
                 <Toolbar>
                     <Typography component={Link} to="/" variant="h6" className={classes.title} color='inherit' >
                         <img 
@@ -19,7 +34,22 @@ const Navbar = ({totalItems}) => {
                             alt="product"height="25px" className={classes.image} />
                         Commerce.js
                     </Typography>
+                    
+                
                     <div className={classes.grow}/>
+
+                            <div>
+                                {/* <BrowserRouter> */}
+                                { categories.map((category) => (
+                                  
+                                    <Link className={classes.links} key={category.id} to={`/category-view/${category.slug}`}>
+                                       {category.name }  
+                                    </Link>
+                                ))}
+                            </div>
+        
+
+
                    
                    {location.pathname === '/' && ( 
                     <div className={classes.button}>

@@ -30,16 +30,7 @@ const Products = ({ categories, onAddToCart, cart }) => {
             <main className={classes.content}>
                 <div className={classes.toolbar}/>
                 
-                {/*                         */}
-                <div>
-                    { categories.map((category) => (
-                        <Link to={`/category-view/${category.slug}`}>
-                           {category.name }  
-                        </Link>
-                    ))}
-                </div>
-
-                       {/*                    */}
+                
                 {
                     categories.map((category, index) => {
                         return (
@@ -57,6 +48,7 @@ const Products = ({ categories, onAddToCart, cart }) => {
                                     <Typography className={classes.title} variant="h4" component="h2" >
                                         {category.name}
                                     </Typography>
+                                    
                                     <Grid container justify="center" spacing={2}>     
                                         {
                                             category.productsData.map((product) => {

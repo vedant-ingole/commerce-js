@@ -1,10 +1,10 @@
 import React from 'react'
-import './style.css';
+// import './style.css';
 
 const Spinner = () => {
     return (
-        <div className="spinner">
-           <h1>Loading.....</h1>   
+        <div className="container">
+            <div className="loader"><span></span></div>
         </div>
     )
 }

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 
 import { commerce } from './lib/commerce';
-import { Products, Navbar, Cart, Checkout, ProductView, CategoryView } from './components';
+import { Products, Navbar, Cart, Checkout, ProductView, CategoryView} from './components';
 
 const App = () => {
 
@@ -100,11 +100,12 @@ const App = () => {
     // console.log(products);
     // console.log(cart);
 
+
     return (
 
-        <BrowserRouter>
+        <>
 
-         <Navbar totalItems={cart.total_items}/>
+         <Navbar totalItems={cart.total_items} categories={categories}  />
          <Switch>
 
              <Route exact path="/">
@@ -125,15 +126,14 @@ const App = () => {
                     onCaptureCheckout={handleCaptureCheckout}
                     error={errorMessage} />
              </Route>
-             <Route exact path="/product-view/:id">
+             <Route  path="/product-view/:id">
                  <ProductView onAddToCart={handleAddToCart} />
              </Route>
-             <Route exact path="/category-view/:slug">
-                 <CategoryView onAddToCart={handleAddToCart} />
+             <Route  path="/category-view/:slug">
+                 <CategoryView  onAddToCart={handleAddToCart} />
              </Route>
-
          </Switch>
-         </BrowserRouter>
+         </>
         
     )
 }

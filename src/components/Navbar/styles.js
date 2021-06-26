@@ -65,4 +65,11 @@ export default makeStyles((theme) => ({
       width: '20ch',
     },
   },
+  links:{
+    padding: '10px',
+    textDecoration:"none",
+    fontWeight:"bold",
+    fontSize:'1.3rem',
+    color: '#777B7E'
+  },
 }));
